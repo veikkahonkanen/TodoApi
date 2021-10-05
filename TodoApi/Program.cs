@@ -109,13 +109,13 @@ namespace TodoApi
             var actor = new Actor()
             {
                 PersonId = personId,
-                Crews = new List<Crew>()
+                // Crews = new List<Crew>()
             };
 
             var actor2 = new Actor()
             {
                 PersonId = personId2,
-                Crews = new List<Crew>()
+                // Crews = new List<Crew>()
             };
 
             var person = new Person()
@@ -136,21 +136,21 @@ namespace TodoApi
                 Actor = actor2
             };
 
-            var actorCrew = new Crew()
+            /*var actorCrew = new Crew()
             {
                 ActorId = actor.Id,
-                MovieId = movieId
-            };
+                 MovieId = movieId
+            };*/
 
-            actor.Crews.Add(actorCrew);
+            // actor.Crews.Add(actorCrew);
 
-            var actorCrew2 = new Crew()
+            /*var actorCrew2 = new Crew()
             {
                 ActorId = actor2.Id,
                 MovieId = movieId
-            };
+            };*/
 
-            actor.Crews.Add(actorCrew2);
+            // actor.Crews.Add(actorCrew2);
 
             var directorPerson = new Person()
             {
@@ -165,18 +165,18 @@ namespace TodoApi
                 PersonId = directorPerson.Id
             };
 
-            var directorCrew = new Crew()
+            /*var directorCrew = new Crew()
             {
                 DirectorId = directorPerson.Id,
                 Director = director,
                 MovieId = movieId
-            };
+            };*/
 
             context.Directors.Add(director);
 
-            context.Crews.Add(actorCrew);
+            // context.Crews.Add(actorCrew);
 
-            context.Crews.Add(directorCrew);
+            // context.Crews.Add(directorCrew);
 
             context.Actors.Add(actor);
 

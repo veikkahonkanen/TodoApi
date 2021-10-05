@@ -10,7 +10,5 @@ namespace TodoApi.Models
         public long PersonId { get; set; }
 
         public Person Person { get; set; }
-
-        public ICollection<Crew>? Crews { get; set; } // Entity framework creates a new database in the background
     }
 }

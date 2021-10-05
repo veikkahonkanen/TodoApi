@@ -30,7 +30,7 @@ namespace TodoApi.Controllers
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
             return await _context.Actors
-                .Include(x => x.Crews)?.ThenInclude(x => x.Movie)
+                // .Include(x => x.Crews)?.ThenInclude(x => x.Movie)
                 .Include(x => x.Person)?
                 .AsNoTracking()
                 .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
@@ -40,14 +40,14 @@ namespace TodoApi.Controllers
         [HttpGet("/GetActorsOfMovie/{id}")]
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActorsOfMovie(long id)
         {
-            var crews = await _context.Crews
+            /*var crews = await _context.Crews
                 .Where(x => x.MovieId == id)
                 .Include(x => x.Actor).ThenInclude(x => x.Person)
-                .ToListAsync();
+                .ToListAsync();*/
 
             var actors = new List<ActorDto>();
 
-            foreach (var crew in crews)
+            /*foreach (var crew in crews)
             {
                 if (crew.Actor != null)
                 {
@@ -59,7 +59,7 @@ namespace TodoApi.Controllers
 
                     actors.Add(actorDto);
                 }
-            }
+            }*/
 
             actors = actors.OrderBy(x => x.Person.LastName).ToList();
 
@@ -71,7 +71,7 @@ namespace TodoApi.Controllers
         public async Task<ActionResult<ActorDto>> GetActor(long id)
         {
             var actor = await _context.Actors
-                .Include(x => x.Crews).ThenInclude(x => x.Movie)
+                // .Include(x => x.Crews).ThenInclude(x => x.Movie)
                 .Include(x => x.Person)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);

@@ -27,7 +27,7 @@ namespace TodoApi.DataTransferObjects.Outgoing
     {
         public CrewDtoProfile()
         {
-            CreateMap<Models.Crew, CrewDto>().ReverseMap();
+            // CreateMap<Models.Crew, CrewDto>().ReverseMap();
         }
     }
 }

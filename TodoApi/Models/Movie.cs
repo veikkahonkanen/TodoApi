@@ -20,8 +20,6 @@ namespace TodoApi.Models
 
         public ProducingCompany ProducingCompany { get; set; }
 
-        public ICollection<Crew> Crews { get; set; }
-
         public ICollection<Review> Reviews { get; set; }
 
         public string SecretInfo { get; set; }
