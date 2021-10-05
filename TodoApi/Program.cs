@@ -26,7 +26,9 @@ namespace TodoApi
                 // Add some objects to in memory database, so you hae some data when starting up the project
                 GenerateMovieData(context);
 
-                GenerateCrewData(context, 1);
+                GenerateActorDataToMovie(context);
+
+                GenerateDirectorDataToMovie(context);
 
                 context.SaveChanges();
             }
@@ -37,6 +39,11 @@ namespace TodoApi
 
         private static void GenerateMovieData(MovieContext context)
         {
+            if (context.Movies.Any())
+            {
+                return;
+            }
+
             var genre = new Genre() { Name = "Komedia" };
 
             var genre2 = new Genre() { Name = "Tragedia" };
@@ -97,30 +104,30 @@ namespace TodoApi
         }
 
         /// <summary>
-        /// Generates given data to given movie
+        /// Generates actor data
         /// </summary>
         /// <param name="context">Database context</param>
-        /// <param name="movieId">Movie Id</param>
-        private static void GenerateCrewData(MovieContext context, long movieId)
+        private static void GenerateActorDataToMovie(MovieContext context)
         {
-            var personId = 12;
-            var personId2 = 13;
+            if (context.Actors.Any())
+            {
+                return;
+            }
 
             var actor = new Actor()
             {
-                PersonId = personId,
+                // MovieId = context.Movies.First().Id
                 // Crews = new List<Crew>()
             };
 
             var actor2 = new Actor()
             {
-                PersonId = personId2,
+                // MovieId = context.Movies.First().Id
                 // Crews = new List<Crew>()
             };
 
             var person = new Person()
             {
-                Id = personId,
                 FirstName = "Pena",
                 LastName = "Koponen",
                 BirthDate = DateTime.Now,
@@ -129,7 +136,6 @@ namespace TodoApi
 
             var person2 = new Person()
             {
-                Id = personId2,
                 FirstName = "Konrad",
                 LastName = "Korppi",
                 BirthDate = DateTime.Now,
@@ -152,27 +158,7 @@ namespace TodoApi
 
             // actor.Crews.Add(actorCrew2);
 
-            var directorPerson = new Person()
-            {
-                Id = 2,
-                FirstName = "Ohjaaja",
-                LastName = "Mies"
-            };
-
-            var director = new Director()
-            {
-                Id = 1,
-                PersonId = directorPerson.Id
-            };
-
-            /*var directorCrew = new Crew()
-            {
-                DirectorId = directorPerson.Id,
-                Director = director,
-                MovieId = movieId
-            };*/
-
-            context.Directors.Add(director);
+            
 
             // context.Crews.Add(actorCrew);
 
@@ -185,6 +171,35 @@ namespace TodoApi
             context.Persons.Add(person);
 
             context.Persons.Add(person2);
+        }
+
+        private static void GenerateDirectorDataToMovie(MovieContext context)
+        {
+            if (context.Directors.Any())
+            {
+                return;
+            }
+
+            var directorPerson = new Person()
+            {
+                FirstName = "Ohjaaja",
+                LastName = "Mies"
+            };
+
+            var director = new Director()
+            {
+                PersonId = directorPerson.Id,
+                // MovieId = context.Movies.First().Id
+            };
+
+            /*var directorCrew = new Crew()
+            {
+                DirectorId = directorPerson.Id,
+                Director = director,
+                MovieId = movieId
+            };*/
+
+            context.Directors.Add(director);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
