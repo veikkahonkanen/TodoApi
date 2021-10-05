@@ -27,31 +27,31 @@ namespace TodoApi.Controllers
 
         // GET: api/Actors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
+        public async Task<ActionResult<IEnumerable<MovieActorDto>>> GetActors()
         {
             return await _context.Actors
                 // .Include(x => x.Crews)?.ThenInclude(x => x.Movie)
                 .Include(x => x.Person)?
                 .AsNoTracking()
-                .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<MovieActorDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
         [HttpGet("/GetActorsOfMovie/{id}")]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActorsOfMovie(long id)
+        public async Task<ActionResult<IEnumerable<MovieActorDto>>> GetActorsOfMovie(long id)
         {
             /*var crews = await _context.Crews
                 .Where(x => x.MovieId == id)
                 .Include(x => x.Actor).ThenInclude(x => x.Person)
                 .ToListAsync();*/
 
-            var actors = new List<ActorDto>();
+            var actors = new List<MovieActorDto>();
 
             /*foreach (var crew in crews)
             {
                 if (crew.Actor != null)
                 {
-                    var actorDto = new ActorDto()
+                    var actorDto = new MovieActorDto()
                     {
                         Id = crew.Id,
                         Person = _mapper.Map<PersonDto>(crew.Actor.Person)
@@ -61,14 +61,14 @@ namespace TodoApi.Controllers
                 }
             }*/
 
-            actors = actors.OrderBy(x => x.Person.LastName).ToList();
+            actors = actors.OrderBy(x => x.LastName).ToList();
 
             return actors;
         }
 
         // GET: api/Actors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ActorDto>> GetActor(long id)
+        public async Task<ActionResult<MovieActorDto>> GetActor(long id)
         {
             var actor = await _context.Actors
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
@@ -81,7 +81,7 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
 
-            var actorDto = _mapper.Map<ActorDto>(actor);
+            var actorDto = _mapper.Map<MovieActorDto>(actor);
 
             return actorDto;
         }

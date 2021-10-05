@@ -7,10 +7,8 @@ using TodoApi.Models;
 
 namespace TodoApi.DataTransferObjects.Outgoing
 {
-    public class MovieDto
+    public class MovieDto : BaseDto
     {
-        public long? Id { get; set; }
-
         public string? Name { get; set; }
 
         public DateTime? ReleaseDate { get; set; }

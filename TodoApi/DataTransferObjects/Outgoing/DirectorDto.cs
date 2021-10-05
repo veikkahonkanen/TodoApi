@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TodoApi.DataTransferObjects.Outgoing
 {
-    public class DirectorDto
+    public class DirectorDto : BaseDto
     {
-        public long? Id { get; set; }
+        public long? PersonId { get; set; }
 
         public PersonDto? Person { get; set; }
-
-        public ICollection<CrewDto>? Crews { get; set; }
     }
 
     public class DirectorDtoProfile : Profile

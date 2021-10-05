@@ -19,7 +19,7 @@ namespace TodoApi.DataTransferObjects.Outgoing
 
         public DirectorDto? Director { get; set; }
 
-        public ActorDto? Actor { get; set; }
+        public MovieActorDto? Actor { get; set; }
     }
 
     public class PersonDtoProfile : Profile

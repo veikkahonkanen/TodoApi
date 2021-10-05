@@ -22,6 +22,10 @@ namespace TodoApi.Models
 
         public ICollection<Review> Reviews { get; set; }
 
+        public ICollection<Actor> Actors { get; set; }
+
+        public ICollection<Director> Directors { get; set; }
+
         public string SecretInfo { get; set; }
     }
 }

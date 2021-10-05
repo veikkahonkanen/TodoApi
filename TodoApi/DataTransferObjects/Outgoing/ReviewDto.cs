@@ -7,10 +7,8 @@ using TodoApi.Models;
 
 namespace TodoApi.DataTransferObjects.Outgoing
 {
-    public class ReviewDto
+    public class ReviewDto : BaseDto
     {
-        public long? Id { get; set; }
-
         public double? Rating { get; set; }
 
         public bool? IsCriticRated { get; set; }
@@ -19,7 +17,7 @@ namespace TodoApi.DataTransferObjects.Outgoing
 
         public long? MovieId { get; set; }
 
-        public Movie? Movie { get; set; }
+        public MovieDto? Movie { get; set; }
     }
 
     public class ReviewDtoProfile : Profile

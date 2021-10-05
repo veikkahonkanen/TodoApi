@@ -30,7 +30,7 @@ namespace TodoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
-            //var movies = await _context.Movies.ToListAsync();
+            // var movies = await _context.Movies.ToListAsync();
 
             // return _mapper.Map<IEnumerable<MovieDto>>(movies);
 
@@ -41,6 +41,8 @@ namespace TodoApi.Controllers
 
             return await _context.Movies
                 // .Include(x => x.Crews).ThenInclude(x => x.Actor).ThenInclude(x => x.Person)
+                .Include(x => x.Actors).ThenInclude(x => x.Person)
+                .Include(x => x.Directors).ThenInclude(x => x.Person)
                 .AsNoTracking()
                 .ProjectTo<MovieDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();

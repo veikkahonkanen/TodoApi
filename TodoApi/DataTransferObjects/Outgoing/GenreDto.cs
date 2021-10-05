@@ -7,10 +7,8 @@ using TodoApi.Models;
 
 namespace TodoApi.DataTransferObjects.Outgoing
 {
-    public class GenreDto
+    public class GenreDto : BaseDto
     {
-        public long? Id { get; set; }
-
         public string? Name { get; set; }
 
         public ICollection<MovieDto>? Movies { get; set; }
