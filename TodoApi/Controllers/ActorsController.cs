@@ -44,11 +44,11 @@ namespace TodoApi.Controllers
             /*var crews = await _context.Crews
                 .Where(x => x.MovieId == id)
                 .Include(x => x.Actor).ThenInclude(x => x.Person)
-                .ToListAsync();*/
+                .ToListAsync();
 
             var actors = new List<MovieActorDto>();
 
-            /*foreach (var crew in crews)
+            foreach (var crew in crews)
             {
                 if (crew.Actor != null)
                 {
@@ -62,9 +62,16 @@ namespace TodoApi.Controllers
                 }
             }*/
 
-            actors = actors.OrderBy(x => x.LastName).ToList();
+            var movie = await _context.Movies
+                .Where(x => x.Id == id)
+                .Include(x => x.Actors).ThenInclude(x => x.Person)
+                .SingleOrDefaultAsync();
 
-            return actors;
+            var actorDtos = _mapper.Map<List<MovieActorDto>>(movie.Actors).ToList();
+
+            var actorsOrdered = actorDtos.OrderBy(x => x.LastName).ToList();
+
+            return actorsOrdered;
         }
 
         // GET: api/Actors/5
@@ -73,7 +80,7 @@ namespace TodoApi.Controllers
         {
             var actor = await _context.Actors
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
-                .Include(x => x.Person)
+                .Include(x => x.Person)?
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 

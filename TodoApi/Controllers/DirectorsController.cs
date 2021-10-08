@@ -33,8 +33,8 @@ namespace TodoApi.Controllers
             // return await _context.Directors.ToListAsync();
 
             return await _context.Directors
-                .Include(x => x.Person)
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
+                .Include(x => x.Person)?
                 .AsNoTracking()
                 .ProjectTo<MovieDirectorDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
@@ -46,7 +46,7 @@ namespace TodoApi.Controllers
         {
             var director = await _context.Directors
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
-                .Include(x => x.Person)
+                .Include(x => x.Person)?
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 

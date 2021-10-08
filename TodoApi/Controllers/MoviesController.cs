@@ -68,6 +68,8 @@ namespace TodoApi.Controllers
                 .Include(x => x.ProducingCompany)
                 // .Include(x => x.Crews).ThenInclude(x => x.Actor).ThenInclude(x => x.Person)
                 // .Include(x => x.Crews).ThenInclude(x => x.Director).ThenInclude(x => x.Person)
+                .Include(x => x.Actors).ThenInclude(x => x.Person)
+                .Include(x => x.Directors).ThenInclude(x => x.Person)
                 .Include(x => x.Reviews.Where(r => r.IsCriticRated == showOnlyCriticReviews))
                 .AsNoTracking() // No need to track the searched items. Speeds up the search and improves performance. Only use when not changing the values of the items in DB, just returning them
                 .SingleOrDefaultAsync(x => x.Id == id);
@@ -107,9 +109,13 @@ namespace TodoApi.Controllers
 
             // movieDto.Actors = _mapper.Map<List<PersonDto>>(movie.Crews.Where(x => x.Actor != null).Select(x => x.Actor.Person)).ToList();
 
+            movieDto.Actors = _mapper.Map<List<PersonDto>>(movie.Actors.Select(x => x.Person)).ToList();
+
             // movieDto.Directors = _mapper.Map<List<PersonDto>>(movie.Crews.Where(x => x.Director != null).Select(x => x.Director.Person)).ToList();
 
-            // movieDto.Reviews = _mapper.Map<List<ReviewDto>>(movie.Reviews).ToList();
+            movieDto.Directors = _mapper.Map<List<PersonDto>>(movie.Directors.Select(x => x.Person)).ToList();
+
+            movieDto.Reviews = _mapper.Map<List<ReviewDto>>(movie.Reviews).ToList();
 
             return movieDto;
         }
