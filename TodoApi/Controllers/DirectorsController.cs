@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -27,7 +28,7 @@ namespace TodoApi.Controllers
 
         // GET: api/Directors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DirectorDto>>> GetDirectors()
+        public async Task<ActionResult<IEnumerable<MovieDirectorDto>>> GetDirectors()
         {
             // return await _context.Directors.ToListAsync();
 
@@ -35,13 +36,13 @@ namespace TodoApi.Controllers
                 .Include(x => x.Person)
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
                 .AsNoTracking()
-                .ProjectTo<DirectorDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<MovieDirectorDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
         // GET: api/Directors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DirectorDto>> GetDirector(long id)
+        public async Task<ActionResult<MovieDirectorDto>> GetDirector(long id)
         {
             var director = await _context.Directors
                 // .Include(x => x.Crews).ThenInclude(x => x.Movie)
@@ -54,7 +55,7 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
 
-            var directorDto = _mapper.Map<DirectorDto>(director);
+            var directorDto = _mapper.Map<MovieDirectorDto>(director);
 
             return directorDto;
         }
@@ -62,7 +63,7 @@ namespace TodoApi.Controllers
         // PUT: api/Directors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDirector(long id, Director director)
+        public async Task<IActionResult> PutDirector(long id, MovieDirectorDtoIn director)
         {
             if (id != director.Id)
             {
@@ -93,12 +94,14 @@ namespace TodoApi.Controllers
         // POST: api/Directors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Director>> PostDirector(Director director)
+        public async Task<ActionResult<MovieDirectorDtoIn>> PostDirector(MovieDirectorDtoIn director)
         {
-            _context.Directors.Add(director);
+            var entityDirector = _mapper.Map<Director>(director);
+
+            _context.Directors.Add(entityDirector);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDirector", new { id = director.Id }, director);
+            return CreatedAtAction("GetDirector", new { id = entityDirector.Id }, director);
         }
 
         // DELETE: api/Directors/5

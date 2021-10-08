@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -70,7 +71,7 @@ namespace TodoApi.Controllers
         // PUT: api/Reviews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(long id, Review review)
+        public async Task<IActionResult> PutReview(long id, ReviewDtoIn review)
         {
             if (id != review.Id)
             {
@@ -101,12 +102,14 @@ namespace TodoApi.Controllers
         // POST: api/Reviews
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Review>> PostReview(Review review)
+        public async Task<ActionResult<ReviewDtoIn>> PostReview(ReviewDtoIn review)
         {
-            _context.Reviews.Add(review);
+            var reviewEntity = _mapper.Map<Review>(review);
+
+            _context.Reviews.Add(reviewEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReview", new { id = review.Id }, review);
+            return CreatedAtAction("GetReview", new { id = reviewEntity.Id }, review);
         }
 
         // DELETE: api/Reviews/5

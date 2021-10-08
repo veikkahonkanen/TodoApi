@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -89,7 +90,7 @@ namespace TodoApi.Controllers
         // PUT: api/Actors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActor(long id, Actor actor)
+        public async Task<IActionResult> PutActor(long id, MovieActorDtoIn actor)
         {
             if (id != actor.Id)
             {
@@ -120,12 +121,14 @@ namespace TodoApi.Controllers
         // POST: api/Actors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Actor>> PostActor(Actor actor)
+        public async Task<ActionResult<MovieActorDtoIn>> PostActor(MovieActorDtoIn actor)
         {
-            _context.Actors.Add(actor);
+            var entityActor = _mapper.Map<Actor>(actor);
+
+            _context.Actors.Add(entityActor);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetActor", new { id = actor.Id }, actor);
+            return CreatedAtAction("GetActor", new { id = entityActor.Id }, actor);
         }
 
         // DELETE: api/Actors/5

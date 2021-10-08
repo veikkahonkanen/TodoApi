@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -58,7 +59,7 @@ namespace TodoApi.Controllers
         // PUT: api/Genres/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGenre(long id, Genre genre)
+        public async Task<IActionResult> PutGenre(long id, GenreDtoIn genre)
         {
             if (id != genre.Id)
             {
@@ -89,12 +90,14 @@ namespace TodoApi.Controllers
         // POST: api/Genres
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Genre>> PostGenre(Genre genre)
+        public async Task<ActionResult<GenreDtoIn>> PostGenre(GenreDtoIn genre)
         {
-            _context.Genres.Add(genre);
+            var entityGenre = _mapper.Map<Genre>(genre);
+
+            _context.Genres.Add(entityGenre);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGenre", new { id = genre.Id }, genre);
+            return CreatedAtAction("GetGenre", new { id = entityGenre.Id }, genre);
         }
 
         // DELETE: api/Genres/5

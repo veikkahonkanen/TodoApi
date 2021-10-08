@@ -17,7 +17,7 @@ namespace TodoApi.DataTransferObjects.Outgoing
 
         public DateTime? BirthDate { get; set; }
 
-        public DirectorDto? Director { get; set; }
+        public MovieDirectorDto? Director { get; set; }
 
         public MovieActorDto? Actor { get; set; }
     }

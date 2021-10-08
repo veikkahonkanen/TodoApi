@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -58,7 +59,7 @@ namespace TodoApi.Controllers
         // PUT: api/ProducingCompanies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducingCompany(long id, ProducingCompany producingCompany)
+        public async Task<IActionResult> PutProducingCompany(long id, ProducingCompanyDtoIn producingCompany)
         {
             if (id != producingCompany.Id)
             {
@@ -89,12 +90,14 @@ namespace TodoApi.Controllers
         // POST: api/ProducingCompanies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProducingCompany>> PostProducingCompany(ProducingCompany producingCompany)
+        public async Task<ActionResult<ProducingCompanyDtoIn>> PostProducingCompany(ProducingCompanyDtoIn producingCompany)
         {
-            _context.ProducingCompanies.Add(producingCompany);
+            var entityProducingCompany = _mapper.Map<ProducingCompany>(producingCompany);
+
+            _context.ProducingCompanies.Add(entityProducingCompany);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProducingCompany", new { id = producingCompany.Id }, producingCompany);
+            return CreatedAtAction("GetProducingCompany", new { id = entityProducingCompany.Id }, producingCompany);
         }
 
         // DELETE: api/ProducingCompanies/5

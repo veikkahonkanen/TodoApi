@@ -14,7 +14,7 @@ namespace TodoApi.DataTransferObjects.Outgoing
 
         public long? DirectorId { get; set; }
 
-        public DirectorDto? Director { get; set; }
+        public MovieDirectorDto? Director { get; set; }
 
         public long? MovieId { get; set; }
 

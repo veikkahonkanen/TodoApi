@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.DataTransferObjects.Incoming;
 using TodoApi.DataTransferObjects.Outgoing;
 using TodoApi.Models;
 
@@ -60,7 +61,7 @@ namespace TodoApi.Controllers
         // PUT: api/Persons/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(long id, Person person)
+        public async Task<IActionResult> PutPerson(long id, PersonDtoIn person)
         {
             if (id != person.Id)
             {
@@ -91,12 +92,14 @@ namespace TodoApi.Controllers
         // POST: api/Persons
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Person>> PostPerson(Person person)
+        public async Task<ActionResult<PersonDtoIn>> PostPerson(PersonDtoIn person)
         {
-            _context.Persons.Add(person);
+            var entityPerson = _mapper.Map<Person>(person);
+
+            _context.Persons.Add(entityPerson);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerson", new { id = person.Id }, person);
+            return CreatedAtAction("GetPerson", new { id = entityPerson.Id }, person);
         }
 
         // DELETE: api/Persons/5
