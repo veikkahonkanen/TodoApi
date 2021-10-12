@@ -29,6 +29,7 @@ namespace TodoApi.Controllers
 
         // GET: api/Movies
         [HttpGet]
+        [AuthorizationAttribute("GetAllMovies")]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
             // var movies = await _context.Movies.ToListAsync();
@@ -51,6 +52,7 @@ namespace TodoApi.Controllers
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
+        [AuthorizationAttribute]
         public async Task<ActionResult<MovieDto>> GetMovie(long id, bool showOnlyCriticReviews)
         {
             // SingleAsync returns an item, and crashes if not found. SingleOrDefault returns null, if not found. FirstOrDefault return the first matching item.
