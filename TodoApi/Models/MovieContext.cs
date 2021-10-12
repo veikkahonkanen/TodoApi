@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TodoApi.Models;
 
 namespace TodoApi.Models
 {
@@ -64,5 +65,7 @@ namespace TodoApi.Models
                 baseModel.UpdatedAt = now;
             }
         }
+
+        public DbSet<TodoApi.Models.Crew> Crew { get; set; }
     }
 }

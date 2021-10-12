@@ -29,7 +29,7 @@ namespace TodoApi.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        [AuthorizationAttribute("GetAllMovies")]
+        [AuthorizationAttribute]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
             // var movies = await _context.Movies.ToListAsync();
@@ -125,6 +125,7 @@ namespace TodoApi.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [AuthorizationAttribute]
         public async Task<IActionResult> PutMovie(long id, MovieDtoIn movie)
         {
             if (id != movie.Id)
@@ -156,6 +157,7 @@ namespace TodoApi.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [AuthorizationAttribute]
         public async Task<ActionResult<MovieDtoIn>> PostMovie(MovieDtoIn movie)
         {
             var entityMovie = _mapper.Map<Movie>(movie);
@@ -168,6 +170,7 @@ namespace TodoApi.Controllers
 
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
+        [AuthorizationAttribute]
         public async Task<IActionResult> DeleteMovie(long id)
         {
             var movie = await _context.Movies.FindAsync(id);

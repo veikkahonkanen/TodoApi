@@ -55,6 +55,7 @@ namespace TodoApi
             if (!context.HttpContext.Request.Headers.TryGetValue(AuthorizationHeaderKey, out var secretKey))
             {
                 context.Result = new UnauthorizedResult();
+                Console.WriteLine("No access");
             }
 
             /* string.IsNullOrEmpty

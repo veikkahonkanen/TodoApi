@@ -33,7 +33,7 @@ namespace TodoApi
 
             services.AddControllers(); //.AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); Alternate way
 
-            services.AddDbContext<MovieContext>(opt => opt.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MovieDb;Trusted_Connection=True;"));
+            services.AddDbContext<MovieContext>(opt => opt.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MovieDb;Trusted_Connection=True;")); // LibraryDbVeHo
 
             services.AddSwaggerGen(c =>
             {
